@@ -1,0 +1,35 @@
+{{ define "main" }}
+  <h1>Ozzie Ausband</h1>
+  
+ <!-- "{{.Content}}" pulls from the markdown content of the corresponding _index.md -->
+{{.Content}}  
+
+<ul>  
+  {{ range .Data.Pages.ByTitle }}
+  <!-- <li><a href="{{.Permalink}}">{{.Title}}</a>{{.Date.Format "2006-01-02"}}</li> -->
+  {{ end }}
+</ul>
+
+{{ range (.Data.Pages.GroupBy "Section").Reverse }}
+<h3>{{ .Key }}</h3>
+<ul>
+    {{ range .Pages }}
+    <li>
+    <a href="{{ .Permalink }}">{{ .Title }}</a>
+    <div class="meta">{{ .Date.Format "Mon, Jan 2, 2006" }}</div>
+    </li>
+    {{ end }}
+</ul>
+{{ end }}
+
+
+
+
+
+
+
+
+
+
+
+{{ end }}
