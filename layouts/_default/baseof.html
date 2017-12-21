@@ -47,9 +47,37 @@
         border: 1px solid black;
       }
     </style>
+    <style type="text/css" media="screen">
+      body {
+        background: #1d1d1d;
+        color: #bbb;
+      }
+      a {
+        color: #89d4df;
+      }
+      header {
+        height: 288px;
+        background: url('/images/btoheader.jpg') no-repeat top center;
+        background-size: contain;
+        background-color:#8cd5df;
+        text-indent:-100em;
+      }
+    </style>
   </head>
   <body>
-    {{ block "main" . }}
-    {{end}}
+    <header><h1>Ozzie Ausband</h1></header>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8">
+        {{ block "main" . }}
+        {{end}}
+        </div>
+        <div class="col-sm-4">
+          {{ block "sidebar" . }}
+          {{end}}
+        </div>
+      </div>
+    </div>
+    
   </body>
 </html>
