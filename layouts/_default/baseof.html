@@ -3,6 +3,15 @@
   <head>
     <meta charset="utf-8">
     <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-111509241-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-111509241-1');
+    </script>
     <title>{{ .Title }}</title>
     <link rel="canonical" href="http://example.ampproject.org/article-metadata.html">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
@@ -62,10 +71,20 @@
         background-color:#8cd5df;
         text-indent:-100em;
       }
+      nav ul li {
+        display:inline;
+      }
     </style>
   </head>
   <body>
     <header><h1>Ozzie Ausband</h1></header>
+    <nav>
+      <ul>
+        <li><a href="/">Blog</a></li>
+        <li><a href="/books">Books</a></li>
+        <li><a href="/about">About</a></li>
+      </ul>
+    </nav>
     <div class="container">
       <div class="row">
         <div class="col-sm-8">
