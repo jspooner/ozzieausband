@@ -1,19 +1,10 @@
 {{ define "main" }}
   <h1>{{ .Title }}</h1>
-  {{.Content}}  
+  {{.Content}}
 {{ end }}
 
 {{ define "sidebar" }}
-_default
-{{ range (.Data.Pages.GroupBy "Section").Reverse }}
-<h3>{{ .Key }}</h3>
-<ul>
-    {{ range .Pages }}
-    <li>
-    <a href="{{ .Permalink }}">{{ .Title }}</a>
-    <div class="meta">{{ .Date.Format "Mon, Jan 2, 2006" }}</div>
-    </li>
-    {{ end }}
-</ul>
-{{ end }}
+
+{{ partial "recent_posts.html" . }}
+
 {{ end }}

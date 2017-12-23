@@ -5,11 +5,16 @@ require 'rss'
 title: "TITLE"
 date: DATE
 draft: false
+categories: ["Blog"]
+series: []
+tags: []
 ---
 BODY
 )
 
-@caption = %Q(<div class="card" style="width: 20rem;">
+
+
+@caption = %Q(<div class="card" style="">
     imageTag
     <div class="card-body">
       <p class="card-text">captionText</p>
@@ -21,6 +26,9 @@ def replace_captions testStr
   testStr.gsub(@captionRegex) do |caption|
     captionText = caption.gsub(/(\[captio)(\/*?)\w+?.+?(\])/,'').gsub(/(\[\/c)(\/*?)\w+?.+?(\])/,'').gsub(/<(\/*?)(?!(em|p|br\s*\/|strong))\w+?.+?>/,'').strip
     imageTag = caption.match(/<im(\/*?)\w+?.+?>/).to_s
+      .gsub(/width=(\'|\")([ -0-9a-zA-Z:]*[ 0-9a-zA-Z;]*)*(\'|\")/, '')
+      .gsub(/height=(\'|\")([ -0-9a-zA-Z:]*[ 0-9a-zA-Z;]*)*(\'|\")/, '')
+      .gsub(/class=(\'|\")([ -0-9a-zA-Z:]*[ 0-9a-zA-Z;]*)*(\'|\")/, '')
     @caption.gsub('captionText',captionText).gsub('imageTag',imageTag)
   end
 end
@@ -33,6 +41,7 @@ end
 
 def update_image_paths body
   body.gsub('src="https://ozzieausband.files.wordpress.com/','src="/images/')
+    .gsub('src="http://ozzieausband.files.wordpress.com/','src="/images/')
 end
 
 def parse file
@@ -44,16 +53,25 @@ def parse file
     path     = page.link.gsub('https://ozzieausband.wordpress.com/','').split('/').compact.join('/')
     p = path.split('/')
     p.pop
-    `mkdir -p content/#{p.join('/')}`
+    `mkdir -p content/posts/#{p.join('/')}`
+    indexFile = "content/posts/#{p.first}/_index.md"
+    unless File.exists?(indexFile)
+      body = %Q(---
+title: "#{p.first}"
+---
+)
+      File.open(indexFile,'w+') { |file| file.write(body) }
+    end
+    
     begin
       title = page.title.gsub('"','')
-      body  = replace_captions(remove_cr(update_image_paths(page.content_encoded))) + "\n\n\n #{page.link}"
+      body  = replace_captions(remove_cr(update_image_paths(page.content_encoded))) #+ "\n\n\n #{page.link}"
       doc   = @template
         .gsub('TITLE', title)
         .gsub('DATE', page.date.strftime('%FT%T%:z'))
         .gsub('BODY', body)
         # .gsub('DATE', '2017-12-17T07:32:00-08:00')
-      File.open("content/" + path + ".md",'w+') { |file| file.write(doc) }
+      File.open("content/posts/" + path + ".md",'w+') { |file| file.write(doc) }
     rescue Exception => e
       puts "ERROR #{path}"
       puts e

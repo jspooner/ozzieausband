@@ -1,0 +1,6 @@
+<h3>Recent Posts</h3>
+<ul>
+  {{ range (where $.Site.Pages "Section" "posts") }}
+  <li><a href="{{.Permalink}}">{{.Title}}</a></li>
+  {{ end }}
+</ul>

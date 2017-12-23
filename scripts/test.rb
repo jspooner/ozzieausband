@@ -25,7 +25,8 @@ feed = RSS::Parser.parse(file,false)
 
 pages = feed.items.find_all { |i| !i.link.include?('?')}
 pages.each do |page|
-  puts page.link if page.content_encoded.empty?
+  # puts page.link if page.content_encoded.empty?
+  puts page.categories.collect { |c| c.to_s }
 end
 
 

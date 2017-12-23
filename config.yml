@@ -1,0 +1,6 @@
+baseURL: http://ozzieausband.com/
+languageCode: en-us
+title: Ozzie Ausband
+taxonomies:
+  tag: "tags"
+  category: "categories"

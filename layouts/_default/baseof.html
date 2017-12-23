@@ -74,13 +74,16 @@
       nav ul li {
         display:inline;
       }
+      aside ul {
+        padding-left: 15px;
+      }
     </style>
   </head>
   <body>
     <header><h1>Ozzie Ausband</h1></header>
     <nav>
       <ul>
-        <li><a href="/">Blog</a></li>
+        <li><a href="/">Home</a></li>
         <li><a href="/books">Books</a></li>
         <li><a href="/about">About</a></li>
       </ul>
@@ -91,10 +94,10 @@
         {{ block "main" . }}
         {{end}}
         </div>
-        <div class="col-sm-4">
+        <aside class="col-sm-4">
           {{ block "sidebar" . }}
           {{end}}
-        </div>
+        </aside>
       </div>
     </div>
     <!-- Quantcast Tag -->
